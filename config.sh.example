@@ -1,0 +1,4 @@
+export TWITTER_KEY="your twitter key"
+export TWITTER_SECRET="your twitter secret"
+export TWITTER_TOKEN="your twitter token"
+export TWITTER_TOKEN_SECRET="your twitter token secret"
