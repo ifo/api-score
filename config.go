@@ -7,44 +7,51 @@ import (
 )
 
 type Config struct {
-	User        string
-	Key         string
-	Secret      string
-	Token       string
-	TokenSecret string
+	TwitterUser        string
+	TwitterKey         string
+	TwitterSecret      string
+	TwitterToken       string
+	TwitterTokenSecret string
+	TwitterScoreWeight float64
 }
 
 func setup() (*Config, error) {
 	var (
-		user        = flag.String("user", os.Getenv("TWITTER_USER"), "Twitter user name")
-		key         = flag.String("key", os.Getenv("TWITTER_KEY"), "Twitter API Key")
-		secret      = flag.String("secret", os.Getenv("TWITTER_SECRET"), "Twitter API Secret")
-		token       = flag.String("token", os.Getenv("TWITTER_TOKEN"), "Twitter API Token")
-		tokenSecret = flag.String("tokensecret", os.Getenv("TWITTER_TOKEN_SECRET"), "Twitter API Token Secret")
+		twUser        = flag.String("twuser", os.Getenv("TWITTER_USER"), "Twitter user name")
+		twKey         = flag.String("twkey", os.Getenv("TWITTER_KEY"), "Twitter API Key")
+		twSecret      = flag.String("twsecret", os.Getenv("TWITTER_SECRET"), "Twitter API Secret")
+		twToken       = flag.String("twtoken", os.Getenv("TWITTER_TOKEN"), "Twitter API Token")
+		twTokenSecret = flag.String("twtokensecret", os.Getenv("TWITTER_TOKEN_SECRET"), "Twitter API Token Secret")
+		twScoreWeight = flag.Float64("twweight", 1.0, "Twitter score weight")
 	)
 
 	flag.Parse()
-	if *user == "" {
-		return nil, fmt.Errorf("user is required")
+	if *twUser == "" {
+		return nil, fmt.Errorf("twuser is required")
 	}
-	if *key == "" {
-		return nil, fmt.Errorf("key is required")
+	if *twKey == "" {
+		return nil, fmt.Errorf("twkey is required")
 	}
-	if *secret == "" {
-		return nil, fmt.Errorf("secret is required")
+	if *twSecret == "" {
+		return nil, fmt.Errorf("twsecret is required")
 	}
-	if *token == "" {
-		return nil, fmt.Errorf("token is required")
+	if *twToken == "" {
+		return nil, fmt.Errorf("twtoken is required")
 	}
-	if *tokenSecret == "" {
-		return nil, fmt.Errorf("tokensecret is required")
+	if *twTokenSecret == "" {
+		return nil, fmt.Errorf("twtokensecret is required")
+	}
+	// Twitter score weight should be between 0 and 1
+	if *twScoreWeight < 0 || *twScoreWeight > 1 {
+		return nil, fmt.Errorf("twweight should be between 0 and 1 (1 is default)")
 	}
 
 	return &Config{
-		User:        *user,
-		Key:         *key,
-		Secret:      *secret,
-		Token:       *token,
-		TokenSecret: *tokenSecret,
+		TwitterUser:        *twUser,
+		TwitterKey:         *twKey,
+		TwitterSecret:      *twSecret,
+		TwitterToken:       *twToken,
+		TwitterTokenSecret: *twTokenSecret,
+		TwitterScoreWeight: *twScoreWeight,
 	}, nil
 }
