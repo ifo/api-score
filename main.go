@@ -11,28 +11,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("starting")
+	fmt.Println("Calculating...\n")
 
 	twScore, err := twitterScore(conf)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(twScore * conf.TwitterScoreWeight)
+	totalScore := twScore * conf.TwitterScoreWeight
 
-	/*
-		origCount := 0
-		replyCount := 0
-		for _, t := range tweets {
-			if t.User.Id == user.Id {
-				if t.InReplyToUserID != 0 {
-					replyCount++
-				} else {
-					origCount++
-				}
-			}
-		}
-		fmt.Println(replyCount)
-		fmt.Println(origCount)
-	*/
+	fmt.Printf("Business:      %s\n", conf.Business)
+	if conf.Verbose {
+		fmt.Printf("Owner:         %s\n", conf.Owner)
+		fmt.Printf("Twitter Score: %0.2f\n", twScore)
+	}
+	fmt.Printf("Total Score:   %0.2f\n", totalScore)
 }
