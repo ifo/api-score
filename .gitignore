@@ -1,0 +1,6 @@
+# ignore binary
+api-score
+
+# ignore data files
+*.json
+*.sh
